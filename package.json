@@ -12,7 +12,8 @@
     "test": "tape test/*.js"
   },
   "dependencies": {
-    "level-store": "~3.9.0"
+    "level-store": "~3.9.0",
+    "map-stream": "0.0.2"
   },
   "devDependencies": {
     "tape": "*",

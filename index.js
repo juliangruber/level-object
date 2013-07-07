@@ -1,4 +1,5 @@
 var Store = require('level-store');
+var map = require('map-stream');
 
 module.exports = Obj;
 
@@ -22,36 +23,24 @@ Obj.prototype.keys = function (cb) {
 Obj.prototype.toJSON = function (cb) {
   var self = this;
   var ended = false;
-  var errored = false;
-  var called = false;
-  var toGet = 0;
   var res = {};
   self.store.createKeyStream()
-    .on('data', function (key) {
-      toGet++;
+    .pipe(map(function (key, done) {
       self.get(key, function (err, value) {
-        if (errored || called) return;
-        if (err) {
-          errored = true;
-          return cb(err);
-        }
-        res[key] = value;
-        if (!--toGet && ended) {
-          called = true;
-          cb(null, res);
-        }
+        if (err) return done(err);
+        done(null, { key: key, val: value });
       });
+    }))
+    .on('data', function (kv) {
+      res[kv.key] = kv.val;
     })
-    .on('error', function (err) {
-      if (called) return;
-      errored = true;
-      cb(err);
-    })
-    .on('end', function () {
-      ended = true;
-      if (!toGet) {
-        called = true;
-        cb(null, res);
-      }
-    });
+    .on('end', onEnd)
+    .on('error', onEnd);
+
+  function onEnd (err) {
+    if (ended) return;
+    ended = true;
+    if (err) cb(err);
+    else cb(null, res);
+  }
 };

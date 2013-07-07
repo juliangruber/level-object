@@ -5,6 +5,8 @@ Store objects in leveldb.
 
 [![build status](https://secure.travis-ci.org/juliangruber/level-object.png)](http://travis-ci.org/juliangruber/level-object)
 
+[![testling badge](https://ci.testling.com/juliangruber/level-object.png)](https://ci.testling.com/juliangruber/level-object)
+
 ## Rationale
 
 The idea is that storing JSON in leveldb sucks, because it's hard

@@ -1,30 +1,30 @@
-var Store = require('level-store');
 var map = require('map-stream');
+var toArray = require('stream-to-array');
 
 module.exports = Obj;
 
 function Obj (db) {
   if (!(this instanceof Obj)) return new Obj(db);
-  this.store = Store(db);
+  this.db = db;
 };
 
 Obj.prototype.get = function (key, cb) {
-  this.store.head(key, cb);
+  this.db.get(key, cb);
 };
 
 Obj.prototype.set = function (key, value, cb) {
-  this.store.append(key, value, { capped: 1 }, cb);  
+  this.db.put(key, value, cb);
 };
 
 Obj.prototype.keys = function (cb) {
-  this.store.keys(cb);
+  toArray(this.db.createKeyStream(), cb);
 };
 
 Obj.prototype.toJSON = function (cb) {
   var self = this;
   var ended = false;
   var res = {};
-  self.store.createKeyStream()
+  self.db.createKeyStream()
     .pipe(map(function (key, done) {
       self.get(key, function (err, value) {
         if (err) return done(err);

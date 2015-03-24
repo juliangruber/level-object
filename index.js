@@ -20,6 +20,19 @@ Obj.prototype.del = function (key, cb) {
   this.db.del(key, cb);
 };
 
+Obj.prototype.patch = function (ops, cb) {
+  ops = ops.map(function(op){
+    return {
+      key: op.key,
+      value: op.value,
+      type: {
+        set: 'put',
+        'del': 'del'
+      }[op.type]
+    };
+  });
+  this.db.batch(ops, cb);
+};
 
 Obj.prototype.keys = function (cb) {
   toArray(this.db.createKeyStream(), cb);

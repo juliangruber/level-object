@@ -106,6 +106,14 @@ Set `key` to `value` and call `cb`, possibly with an error object.
 
 Delete `key` and call `cb`, possibly with an error object.
 
+### Obj#patch(ops, cb)
+
+Modify multiple values at once. `ops` is an array containing objects.
+
+To write / modify a value, add `{ type: 'set', key: key, value: value }`.
+
+To delete a value, add `{ type: 'del', key: key }`.
+
 ### Obj#keys(cb)
 
 Call `cb` with `err` and an array of all set keys, like `Object.keys`.

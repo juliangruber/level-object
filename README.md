@@ -102,6 +102,10 @@ Call `cb` with `(err, value)`.
 
 Set `key` to `value` and call `cb`, possibly with an error object.
 
+### Obj#del(key[, cb])
+
+Delete `key` and call `cb`, possibly with an error object.
+
 ### Obj#keys(cb)
 
 Call `cb` with `err` and an array of all set keys, like `Object.keys`.

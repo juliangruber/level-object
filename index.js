@@ -16,6 +16,11 @@ Obj.prototype.set = function (key, value, cb) {
   this.db.put(key, value, cb);
 };
 
+Obj.prototype.del = function (key, cb) {
+  this.db.del(key, cb);
+};
+
+
 Obj.prototype.keys = function (cb) {
   toArray(this.db.createKeyStream(), cb);
 };

@@ -42,15 +42,9 @@ Obj.prototype.toJSON = function (cb) {
   var self = this;
   var ended = false;
   var res = {};
-  self.db.createKeyStream()
-    .pipe(map(function (key, done) {
-      self.get(key, function (err, value) {
-        if (err) return done(err);
-        done(null, { key: key, val: value });
-      });
-    }))
+  self.db.createReadStream()
     .on('data', function (kv) {
-      res[kv.key] = kv.val;
+      res[kv.key] = kv.value;
     })
     .on('end', onEnd)
     .on('error', onEnd);

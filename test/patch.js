@@ -4,25 +4,26 @@ var test = require('tape');
 
 test('patch', function (t) {
   t.plan(6);
-  var obj = levelObj(level());
+  var db = level();
+  var obj = levelObj(db);
 
   obj.patch([
-    { type: 'set', key: 'foo', value: 'bar' },  
-    { type: 'set', key: 'bar', value: 'baz' },  
+    { type: 'set', object: 'obj', key: 'foo', value: 'bar' },  
+    { type: 'set', object: 'obj', key: 'bar', value: 'baz' },  
   ], function (err) {
     t.error(err);
-    obj.toJSON(function (err, json) {
+    obj.toJSON('obj', function (err, json) {
       t.error(err);
       t.deepEqual(json, {
         foo: 'bar',
         bar: 'baz'
       });
       obj.patch([
-        { type: 'set', key: 'foo', value: 'nope' },  
-        { type: 'del', key: 'bar' },
+        { type: 'set', object: 'obj', key: 'foo', value: 'nope' },  
+        { type: 'del', object: 'obj', key: 'bar' },
       ], function (err) {
         t.error(err);
-        obj.toJSON(function (err, json) {
+        obj.toJSON('obj', function (err, json) {
           t.error(err);
           t.deepEqual(json, {
             foo: 'nope'
@@ -32,4 +33,3 @@ test('patch', function (t) {
     });
   });
 });
-

@@ -71,56 +71,48 @@ var levelObj = require('level-object');
 var level = require('level');
 var db = level(__dirname + '/db');
 
-var obj = levelObj(db); // turn the whole db into a object
-obj.set('foo', 'bar', function (err) {
-  obj.toJSON(function (err, json) {
+var store = levelObj(db);
+store.set('name', 'key', 'value', function (err) {
+  store.toJSON('name', function (err, json) {
     console.log(json);
-    // => { "foo": "bar" }
+    // => { "key": "value" }
   });
 });
-```
-
-As you see you can only pass a whole database object to `levelObj`.
-That means, if you want your object to be at `a:b:c` e.g., you have
-to *pass a [sublevel](https://github.com/dominictarr/level-sublevel)*:
-
-```js
-var obj = levelObj(db.sublevel('a:b:c'));
 ```
 
 ## API
 
 ### Obj(db)
 
-Create a new object on the passed `db` object.
+Create a new store on the passed `db` object.
 
-### Obj#get(key, cb)
+### Obj#get(name, key, cb)
 
 Call `cb` with `(err, value)`.
 
-### Obj#set(key, value[, cb])
+### Obj#set(name, key, value[, cb])
 
-Set `key` to `value` and call `cb`, possibly with an error object.
+Set `name`'s `key` to `value` and call `cb`, possibly with an error object.
 
-### Obj#del(key[, cb])
+### Obj#del(name, key[, cb])
 
-Delete `key` and call `cb`, possibly with an error object.
+Delete `name`'s `key` and call `cb`, possibly with an error object.
 
 ### Obj#patch(ops, cb)
 
-Modify multiple values at once. `ops` is an array containing objects.
+Modify multiple values and objects at once. `ops` is an array containing objects.
 
-To write / modify a value, add `{ type: 'set', key: key, value: value }`.
+To write / modify a value, add `{ type: 'set', object: name, key: key, value: value }`.
 
-To delete a value, add `{ type: 'del', key: key }`.
+To delete a value, add `{ type: 'del', object: name, key: key }`.
 
-### Obj#keys(cb)
+### Obj#keys(name, cb)
 
 Call `cb` with `err` and an array of all set keys, like `Object.keys`.
 
-### Obj#toJSON(cb)
+### Obj#toJSON(name, cb)
 
-Call `cb` with `err` and a JavaScript representation of `Obj`.
+Call `cb` with `err` and a JavaScript representation of `name`.
 
 ## Installation
 

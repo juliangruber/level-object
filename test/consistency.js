@@ -9,11 +9,11 @@ test('consistency', function (t) {
   t.plan(iterations * 2);
 
   function run () {
-    obj.set('foo', 'bar');
-    obj.set('foo', 'baz');
+    obj.set('obj', 'foo', 'bar');
+    obj.set('obj', 'foo', 'baz');
 
     setTimeout(function () {
-      obj.get('foo', function (err, val) {
+      obj.get('obj', 'foo', function (err, val) {
         t.error(err);
         t.equal(val, 'baz');
         if (--iterations) run();

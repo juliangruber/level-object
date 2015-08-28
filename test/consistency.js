@@ -6,11 +6,11 @@ test('consistency', function (t) {
   var obj = levelObj(level());
   var iterations = 10;
 
-  t.plan(iterations * 2);
+  t.plan(iterations * 4);
 
   function run () {
-    obj.set('obj', 'foo', 'bar');
-    obj.set('obj', 'foo', 'baz');
+    obj.set('obj', 'foo', 'bar', t.error.bind(t));
+    obj.set('obj', 'foo', 'baz', t.error.bind(t));
 
     setTimeout(function () {
       obj.get('obj', 'foo', function (err, val) {

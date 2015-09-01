@@ -1,5 +1,3 @@
-var map = require('map-stream');
-var toArray = require('stream-to-array');
 var Pathwise = require('level-pathwise');
 
 module.exports = Obj;

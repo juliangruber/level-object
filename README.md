@@ -3,6 +3,8 @@
 
 Store objects in leveldb.
 
+__It's recommended to use [level-pathwise](https://github.com/juliangruber/level-pathwise) instead since it's a lot more flexible and the api isn't more complicated. `store.set('userid', 'name', 'fritz')` becomes `store.put(['userid', 'name'], 'fritz')`.__
+
 [![build status](https://secure.travis-ci.org/juliangruber/level-object.png)](http://travis-ci.org/juliangruber/level-object)
 
 [![testling badge](https://ci.testling.com/juliangruber/level-object.png)](https://ci.testling.com/juliangruber/level-object)

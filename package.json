@@ -12,11 +12,11 @@
     "test": "make test"
   },
   "dependencies": {
-    "level-pathwise": "^2.1.0"
+    "level-pathwise": "2.1.0"
   },
   "devDependencies": {
-    "level-test": "^2.0.1",
-    "tape": "*"
+    "level-test": "2.0.1",
+    "tape": "4.2.0"
   },
   "keywords": [
     "leveldb",

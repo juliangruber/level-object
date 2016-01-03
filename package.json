@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "level-test": "^2.0.1",
-    "tape": "*"
+    "tape": "^4.4.0"
   },
   "keywords": [
     "leveldb",
